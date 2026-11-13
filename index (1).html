@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Untukmu ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink-50:#fff5f8;
+    --pink-100:#ffe4ee;
+    --pink-200:#ffcfe0;
+    --pink-300:#ffb3cf;
+    --pink-400:#ff8fb8;
+    --pink-500:#ff6b9d;
+    --rose:#e84a7f;
+    --ink:#7a2e4d;
+    --cream:#fff9f0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:'Quicksand',system-ui,-apple-system,'Segoe UI',sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 15% 20%, #ffd9e8 0, transparent 45%),
+      radial-gradient(circle at 85% 80%, #ffc8dd 0, transparent 45%),
+      radial-gradient(circle at 80% 15%, #ffe9f2 0, transparent 40%),
+      linear-gradient(160deg,#ffeef5 0%,#ffdbe9 50%,#ffcfe0 100%);
+    background-attachment:fixed;
+    overflow:hidden;
+    min-height:100dvh;
+  }
+
+  /* ---------- Hati berjatuhan ---------- */
+  #hearts-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+  .falling-heart{
+    position:absolute;top:-10vh;
+    will-change:transform,opacity;
+    animation:fall linear forwards;
+    filter:drop-shadow(0 2px 4px rgba(232,74,127,.25));
+    user-select:none;
+  }
+  @keyframes fall{
+    0%{transform:translate3d(0,-10vh,0) rotate(0deg);opacity:0}
+    10%{opacity:.95}
+    50%{transform:translate3d(var(--sway),55vh,0) rotate(180deg)}
+    100%{transform:translate3d(calc(var(--sway) * -1),115vh,0) rotate(360deg);opacity:.9}
+  }
+
+  /* ---------- Layout ---------- */
+  .stage{
+    position:relative;z-index:2;
+    min-height:100dvh;
+    display:flex;align-items:center;justify-content:center;
+    padding:16px;
+  }
+  .card{
+    width:min(560px,100%);
+    background:rgba(255,255,255,.62);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border:2px solid rgba(255,255,255,.85);
+    border-radius:36px;
+    padding:22px 22px 30px;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(232,74,127,.25), inset 0 0 40px rgba(255,255,255,.5);
+    animation:cardIn .9s cubic-bezier(.2,.9,.3,1.2) both;
+    max-height:calc(100dvh - 24px);
+    overflow:hidden;
+  }
+  @keyframes cardIn{from{opacity:0;transform:translateY(40px) scale(.92)}to{opacity:1;transform:none}}
+
+  .illustration{width:min(250px,56vw);margin:0 auto 4px;display:block;animation:bob 3.2s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+  .eyebrow{
+    font-family:'Pacifico',cursive;
+    font-size:clamp(1.35rem,5.2vw,2rem);
+    line-height:1.3;
+    color:var(--rose);
+    text-shadow:0 2px 0 #fff, 0 6px 16px rgba(232,74,127,.25);
+    margin-bottom:10px;
+  }
+  .question{
+    font-weight:700;
+    font-size:clamp(1.3rem,5vw,1.8rem);
+    margin-bottom:6px;
+  }
+  .question span{display:inline-block;animation:beat 1.2s ease-in-out infinite}
+  @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.18)}}
+
+  .msg{
+    min-height:2.6em;
+    margin:10px auto 14px;
+    font-weight:600;
+    font-size:clamp(.95rem,3.6vw,1.1rem);
+    color:#b0396a;
+    max-width:92%;
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .25s, transform .25s;
+  }
+  .msg.pop{animation:msgPop .45s cubic-bezier(.2,1.6,.4,1)}
+  @keyframes msgPop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+
+  .buttons{
+    display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;
+    min-height:70px;
+  }
+  .btn{
+    font-family:inherit;font-weight:700;
+    font-size:clamp(1rem,3.8vw,1.15rem);
+    border:none;cursor:pointer;
+    padding:14px 26px;border-radius:999px;
+    color:#fff;white-space:nowrap;
+    touch-action:manipulation;
+    transition:transform .25s cubic-bezier(.3,1.4,.5,1), box-shadow .25s, left .45s cubic-bezier(.3,1.3,.5,1), top .45s cubic-bezier(.3,1.3,.5,1);
+  }
+  #yesBtn{
+    background:linear-gradient(135deg,#ff6b9d,#e84a7f);
+    box-shadow:0 8px 22px rgba(232,74,127,.45);
+    animation:glow 1.8s ease-in-out infinite;
+    transform-origin:center;
+    z-index:5;
+  }
+  #yesBtn:hover{transform:scale(1.08) rotate(-2deg)}
+  #yesBtn:active{transform:scale(.96)}
+  @keyframes glow{
+    0%,100%{box-shadow:0 8px 22px rgba(232,74,127,.45)}
+    50%{box-shadow:0 8px 34px rgba(232,74,127,.8),0 0 0 8px rgba(255,107,157,.18)}
+  }
+  #noBtn{
+    background:linear-gradient(135deg,#b9a3c9,#9b86b3);
+    box-shadow:0 6px 16px rgba(120,90,160,.35);
+    z-index:6;
+  }
+  #noBtn.runaway{position:fixed;margin:0}
+  #noSlot{display:inline-block}
+
+  .footer-note{margin-top:16px;font-size:.8rem;color:#c46a90;opacity:.85}
+
+  /* ---------- Halaman sukses ---------- */
+  #success{
+    position:fixed;inset:0;z-index:20;
+    display:none;align-items:center;justify-content:center;
+    padding:18px;text-align:center;
+    background:
+      radial-gradient(circle at 50% 30%, #fff0f6 0, transparent 60%),
+      linear-gradient(160deg,#ffe3ee,#ffc5db 60%,#ffb3cf);
+    overflow:hidden;
+  }
+  #success.show{display:flex;animation:fadeIn .9s ease both}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .success-card{
+    position:relative;z-index:3;
+    width:min(620px,100%);
+    background:rgba(255,255,255,.6);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border:2px solid rgba(255,255,255,.9);
+    border-radius:36px;padding:26px 22px 30px;
+    box-shadow:0 24px 70px rgba(232,74,127,.35);
+    animation:cardIn 1s cubic-bezier(.2,.9,.3,1.2) .2s both;
+    max-height:calc(100dvh - 30px);
+    overflow:auto;
+  }
+  .success-card h1{
+    font-family:'Pacifico',cursive;
+    font-weight:400;
+    font-size:clamp(1.7rem,7.2vw,3rem);
+    line-height:1.25;color:var(--rose);
+    text-shadow:0 3px 0 #fff,0 8px 22px rgba(232,74,127,.35);
+    margin:6px 0 14px;
+  }
+  .success-card p{
+    font-size:clamp(1rem,3.9vw,1.2rem);
+    font-weight:600;line-height:1.65;color:#8c3560;
+  }
+  .big-heart{
+    font-size:clamp(3.2rem,12vw,5rem);display:inline-block;
+    animation:beat 1.2s ease-in-out infinite;
+    filter:drop-shadow(0 6px 10px rgba(232,74,127,.4));
+  }
+  .signature{margin-top:16px;font-family:'Pacifico',cursive;color:var(--rose);font-size:1.25rem}
+
+  /* Bunga */
+  #flowers{position:absolute;left:0;right:0;bottom:0;height:42vh;z-index:2;pointer-events:none}
+  .flower{
+    position:absolute;bottom:-6px;transform-origin:50% 100%;
+    animation:grow 1.6s cubic-bezier(.2,1.2,.4,1) both, sway 4s ease-in-out infinite;
+    animation-delay:var(--d),calc(var(--d) + 1.6s);
+  }
+  .flower svg{display:block;overflow:visible}
+  @keyframes grow{from{transform:scaleY(0) scale(.4);opacity:0}to{transform:scaleY(1) scale(1);opacity:1}}
+  @keyframes sway{0%,100%{rotate:-3deg}50%{rotate:3deg}}
+
+  .rise-heart{
+    position:absolute;bottom:-40px;z-index:1;pointer-events:none;
+    animation:rise linear forwards;will-change:transform,opacity;
+  }
+  @keyframes rise{
+    0%{transform:translate3d(0,0,0) scale(.6);opacity:0}
+    15%{opacity:.95}
+    100%{transform:translate3d(var(--sway),-115vh,0) scale(1.3);opacity:0}
+  }
+
+  #confetti{position:fixed;inset:0;z-index:30;pointer-events:none}
+
+  @media (max-height:640px){
+    .illustration{width:min(170px,40vw)}
+    .card{padding:14px 16px 20px}
+    .msg{margin:6px auto 10px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .falling-heart,.illustration,.question span,#yesBtn,.big-heart{animation-duration:0.001s;animation-iteration-count:1}
+  }
+</style>
+</head>
+<body>
+
+<div id="hearts-layer" aria-hidden="true"></div>
+
+<main class="stage" id="main">
+  <section class="card">
+    <!-- Ilustrasi pasangan lucu (SVG) -->
+    <svg class="illustration" viewBox="0 0 300 220" role="img" aria-label="Sepasang karakter lucu saling menyayangi">
+      <defs>
+        <linearGradient id="gHeart" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ff8fb8"/><stop offset="1" stop-color="#e84a7f"/>
+        </linearGradient>
+      </defs>
+      <!-- tanah -->
+      <ellipse cx="150" cy="205" rx="115" ry="10" fill="#ff9cc0" opacity=".35"/>
+
+      <!-- Karakter perempuan (kiri) -->
+      <g>
+        <!-- rambut belakang -->
+        <ellipse cx="95" cy="92" rx="42" ry="44" fill="#6b3a2e"/>
+        <!-- badan / gaun -->
+        <path d="M62 200 Q64 142 95 138 Q126 142 128 200 Z" fill="#ffb3cf"/>
+        <path d="M62 200 Q64 142 95 138 Q126 142 128 200 Z" fill="none" stroke="#fff" stroke-width="2" opacity=".6"/>
+        <!-- kepala -->
+        <circle cx="95" cy="98" r="36" fill="#ffe0cc"/>
+        <!-- poni -->
+        <path d="M60 92 Q70 56 96 58 Q124 58 130 92 Q108 76 92 78 Q74 78 60 92Z" fill="#6b3a2e"/>
+        <!-- pita -->
+        <g transform="translate(120 66)">
+          <path d="M0 0 L-14 -10 L-14 10 Z" fill="#ff6b9d"/>
+          <path d="M0 0 L14 -10 L14 10 Z" fill="#ff6b9d"/>
+          <circle r="4" fill="#e84a7f"/>
+        </g>
+        <!-- mata -->
+        <circle cx="82" cy="102" r="4.2" fill="#3b1f2b"/><circle cx="108" cy="102" r="4.2" fill="#3b1f2b"/>
+        <circle cx="83.4" cy="100.6" r="1.4" fill="#fff"/><circle cx="109.4" cy="100.6" r="1.4" fill="#fff"/>
+        <!-- pipi -->
+        <ellipse cx="73" cy="113" rx="7" ry="4.5" fill="#ff8fb8" opacity=".6"/>
+        <ellipse cx="117" cy="113" rx="7" ry="4.5" fill="#ff8fb8" opacity=".6"/>
+        <!-- senyum -->
+        <path d="M88 116 Q95 124 102 116" fill="none" stroke="#c2456f" stroke-width="2.6" stroke-linecap="round"/>
+        <!-- tangan -->
+        <circle cx="130" cy="160" r="9" fill="#ffe0cc"/>
+      </g>
+
+      <!-- Karakter laki-laki (kanan) -->
+      <g>
+        <!-- badan -->
+        <path d="M172 200 Q174 142 205 138 Q236 142 238 200 Z" fill="#a8d4ff"/>
+        <path d="M172 200 Q174 142 205 138 Q236 142 238 200 Z" fill="none" stroke="#fff" stroke-width="2" opacity=".6"/>
+        <!-- kepala -->
+        <circle cx="205" cy="98" r="36" fill="#ffe0cc"/>
+        <!-- rambut -->
+        <path d="M169 94 Q166 56 205 56 Q244 56 241 94 Q232 72 212 72 Q192 72 182 80 Q174 84 169 94Z" fill="#3d2b24"/>
+        <path d="M196 62 Q200 48 210 56" fill="none" stroke="#3d2b24" stroke-width="5" stroke-linecap="round"/>
+        <!-- mata -->
+        <circle cx="192" cy="102" r="4.2" fill="#3b1f2b"/><circle cx="218" cy="102" r="4.2" fill="#3b1f2b"/>
+        <circle cx="193.4" cy="100.6" r="1.4" fill="#fff"/><circle cx="219.4" cy="100.6" r="1.4" fill="#fff"/>
+        <!-- pipi -->
+        <ellipse cx="183" cy="113" rx="7" ry="4.5" fill="#ff8fb8" opacity=".6"/>
+        <ellipse cx="227" cy="113" rx="7" ry="4.5" fill="#ff8fb8" opacity=".6"/>
+        <!-- senyum -->
+        <path d="M198 116 Q205 124 212 116" fill="none" stroke="#c2456f" stroke-width="2.6" stroke-linecap="round"/>
+        <circle cx="170" cy="160" r="9" fill="#ffe0cc"/>
+      </g>
+
+      <!-- Hati besar di tengah -->
+      <g transform="translate(150 150)">
+        <g>
+          <animateTransform attributeName="transform" type="scale" values="1;1.18;1;1.12;1" dur="1.3s" repeatCount="indefinite"/>
+          <path d="M0 22 C-34 -4 -22 -34 0 -16 C22 -34 34 -4 0 22Z" fill="url(#gHeart)" stroke="#fff" stroke-width="3"/>
+          <ellipse cx="-9" cy="-9" rx="5" ry="3" fill="#fff" opacity=".6" transform="rotate(-30 -9 -9)"/>
+        </g>
+      </g>
+
+      <!-- Hati kecil melayang -->
+      <g fill="#ff8fb8">
+        <path d="M150 40 c-8 -6 -14 2 -8 8 l8 7 8 -7 c6 -6 0 -14 -8 -8z">
+          <animateTransform attributeName="transform" type="translate" values="0 0;0 -10;0 0" dur="2.4s" repeatCount="indefinite"/>
+        </path>
+        <path d="M40 60 c-5 -4 -9 1 -5 5 l5 5 5 -5 c4 -4 0 -9 -5 -5z" opacity=".7">
+          <animateTransform attributeName="transform" type="translate" values="0 0;0 -8;0 0" dur="3s" repeatCount="indefinite"/>
+        </path>
+        <path d="M262 50 c-5 -4 -9 1 -5 5 l5 5 5 -5 c4 -4 0 -9 -5 -5z" opacity=".7">
+          <animateTransform attributeName="transform" type="translate" values="0 0;0 -9;0 0" dur="2.8s" repeatCount="indefinite"/>
+        </path>
+      </g>
+    </svg>
+
+    <h1 class="eyebrow">Aku punya sesuatu yang ingin aku tanyakan kepadamu ❤️</h1>
+    <p class="question"><span>💗</span> Maukah kamu menjadi pacarku? <span style="animation-delay:.3s">💗</span></p>
+
+    <div class="msg" id="msg" aria-live="polite">Pilih jawabanmu dengan hati-hati ya... 🥺</div>
+
+    <div class="buttons" id="buttons">
+      <button class="btn" id="yesBtn" type="button">❤️ IYA, MAU!</button>
+      <span id="noSlot"><button class="btn" id="noBtn" type="button">😝 TIDAK MAU</button></span>
+    </div>
+
+    <p class="footer-note">dibuat dengan sepenuh hati ✨</p>
+  </section>
+</main>
+
+<!-- Halaman setelah menjawab IYA -->
+<section id="success" aria-live="polite">
+  <div class="rise-layer" id="riseLayer" aria-hidden="true"></div>
+  <div class="success-card">
+    <div class="big-heart">💖</div>
+    <h1>YEAY! ❤️ AKHIRNYA KAMU MAU!</h1>
+    <p>Terima kasih sudah menjadi bagian dari cerita indahku. Semoga kita bisa saling menjaga dan membahagiakan.</p>
+    <div class="signature">Aku sayang kamu 💕</div>
+    <button type="button" id="resetBtn" style="margin-top:14px;background:none;border:none;font-family:inherit;font-size:.78rem;color:#c46a90;opacity:.7;cursor:pointer;text-decoration:underline">↺ ulangi dari pertanyaan</button>
+  </div>
+  <div id="flowers" aria-hidden="true"></div>
+</section>
+
+<canvas id="confetti"></canvas>
+
+<script>
+(function(){
+  'use strict';
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ================= Hati berjatuhan ================= */
+  var heartsLayer = document.getElementById('hearts-layer');
+  var heartEmojis = ['💗','💖','💕','❤️','🌸','💞','🩷'];
+  var maxHearts = 38;
+
+  function spawnFallingHeart(){
+    if (document.hidden) return;
+    if (heartsLayer.childElementCount > maxHearts) return;
+    var h = document.createElement('span');
+    h.className = 'falling-heart';
+    h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+    var size = 14 + Math.random()*26;
+    h.style.left = (Math.random()*100) + 'vw';
+    h.style.fontSize = size + 'px';
+    h.style.setProperty('--sway', (Math.random()*80 - 40) + 'px');
+    var dur = 6 + Math.random()*7;
+    h.style.animationDuration = dur + 's';
+    h.style.opacity = (0.55 + Math.random()*0.4).toFixed(2);
+    heartsLayer.appendChild(h);
+    setTimeout(function(){ h.remove(); }, dur*1000 + 200);
+  }
+  if (!reduceMotion){
+    for (var i=0;i<14;i++) setTimeout(spawnFallingHeart, i*220);
+    setInterval(spawnFallingHeart, 420);
+  }
+
+  /* ================= Tombol TIDAK MAU ================= */
+  var noBtn  = document.getElementById('noBtn');
+  var yesBtn = document.getElementById('yesBtn');
+  var noSlot = document.getElementById('noSlot');
+  var msgEl  = document.getElementById('msg');
+
+  var messages = [
+    "Eh, kok kepencet? Coba lagi deh 😝",
+    "Tombolnya malu-malu tuh... 🙈",
+    "Hehe, nggak kena! 😜",
+    "Hayo, jangan pilih yang itu 🥺",
+    "Tombol ini lagi ngambek, pilih yang lain aja ya~ 💕",
+    "Kamu pasti salah pencet, kan? 😏",
+    "Yakin? Coba pikir lagi deh... 🥹",
+    "Wah, tombolnya lincah banget ya! 🏃💨",
+    "Hatiku retak nih... tapi masih bisa diobati kok 💔➡️❤️",
+    "Tombol itu sudah dipesan orang lain 🤭",
+    "Ayolah, tombol yang pink jauh lebih cantik 😘",
+    "Kamu lucu banget kalau lagi usaha begini 😆",
+    "Mustahil! Kamu nggak akan bisa nangkap dia 🏴‍☠️",
+    "Aku punya cokelat kalau kamu pilih IYA 🍫",
+    "Pilih IYA aja, nggak ada ruginya kok 🥰"
+  ];
+  var noCount = 0;
+  var lastMsg = -1;
+  var running = false;
+
+  function showMessage(text){
+    msgEl.textContent = text;
+    msgEl.classList.remove('pop');
+    void msgEl.offsetWidth;
+    msgEl.classList.add('pop');
+  }
+
+  function rectsOverlap(a, b, pad){
+    return !(a.right + pad < b.left || a.left - pad > b.right || a.bottom + pad < b.top || a.top - pad > b.bottom);
+  }
+
+  function randomPosition(){
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var w = noBtn.offsetWidth, h = noBtn.offsetHeight;
+    var margin = 10;
+    var maxX = Math.max(margin, vw - w - margin);
+    var maxY = Math.max(margin, vh - h - margin);
+    var yesRect = yesBtn.getBoundingClientRect();
+    var curLeft = parseFloat(noBtn.style.left) || 0;
+    var curTop  = parseFloat(noBtn.style.top)  || 0;
+    var x, y, tries = 0, ok;
+    do {
+      x = margin + Math.random()*(maxX - margin);
+      y = margin + Math.random()*(maxY - margin);
+      var cand = {left:x, top:y, right:x+w, bottom:y+h};
+      var farEnough = Math.hypot(x - curLeft, y - curTop) > Math.min(vw, vh) * 0.25;
+      ok = !rectsOverlap(cand, yesRect, 14) && (farEnough || tries > 12);
+      tries++;
+    } while(!ok && tries < 40);
+    x = Math.min(Math.max(margin, x), maxX);
+    y = Math.min(Math.max(margin, y), maxY);
+    return {x:x, y:y};
+  }
+
+  function startRunaway(){
+    if (running) return;
+    var r = noBtn.getBoundingClientRect();
+    // jaga ruang di layout agar tombol IYA tidak bergeser
+    noSlot.style.width  = r.width + 'px';
+    noSlot.style.height = r.height + 'px';
+    noBtn.style.left = r.left + 'px';
+    noBtn.style.top  = r.top + 'px';
+    noBtn.classList.add('runaway');
+    running = true;
+    void noBtn.offsetWidth; // paksa reflow agar transisi berjalan
+  }
+
+  function dodge(e){
+    if (e){
+      if (e.cancelable) e.preventDefault();
+      e.stopPropagation();
+    }
+    startRunaway();
+    var p = randomPosition();
+    noBtn.style.left = p.x + 'px';
+    noBtn.style.top  = p.y + 'px';
+
+    noCount++;
+    var idx;
+    do { idx = Math.floor(Math.random()*messages.length); } while(idx === lastMsg && messages.length > 1);
+    lastMsg = idx;
+    showMessage(messages[idx]);
+
+    // tombol IYA makin besar (maks 1.5x)
+    var scale = Math.min(1 + noCount*0.05, 1.5);
+    yesBtn.style.transform = 'scale(' + scale + ')';
+    // tombol TIDAK makin kecil sedikit (min 0.75x)
+    noBtn.style.fontSize = Math.max(0.75, 1 - noCount*0.02) + 'em';
+  }
+
+  // Desktop: kabur saat didekati; HP: kabur saat disentuh; fallback: klik
+  noBtn.addEventListener('mouseenter', dodge);
+  noBtn.addEventListener('touchstart', dodge, {passive:false});
+  noBtn.addEventListener('pointerdown', function(e){ if (e.pointerType !== 'touch') dodge(e); });
+  noBtn.addEventListener('click', dodge);
+  noBtn.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') dodge(e); });
+
+  window.addEventListener('resize', function(){
+    if (!running) return;
+    var w = noBtn.offsetWidth, h = noBtn.offsetHeight;
+    var x = parseFloat(noBtn.style.left) || 0, y = parseFloat(noBtn.style.top) || 0;
+    noBtn.style.left = Math.min(Math.max(10, x), Math.max(10, window.innerWidth - w - 10)) + 'px';
+    noBtn.style.top  = Math.min(Math.max(10, y), Math.max(10, window.innerHeight - h - 10)) + 'px';
+  });
+
+  /* ================= Confetti ================= */
+  var canvas = document.getElementById('confetti');
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+  var animating = false;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function resizeCanvas(){
+    canvas.width  = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width  = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  var colors = ['#ff6b9d','#ff8fb8','#ffb3cf','#ffd166','#fff','#e84a7f','#c9a7ff','#ffcad4'];
+
+  function drawHeartShape(c, size){
+    c.beginPath();
+    c.moveTo(0, size*0.35);
+    c.bezierCurveTo(-size, -size*0.3, -size*0.55, -size*1.05, 0, -size*0.45);
+    c.bezierCurveTo(size*0.55, -size*1.05, size, -size*0.3, 0, size*0.35);
+    c.closePath();
+  }
+
+  function burst(x, y, count){
+    for (var i=0;i<count;i++){
+      var angle = Math.random()*Math.PI*2;
+      var speed = 5 + Math.random()*11;
+      particles.push({
+        x:x, y:y,
+        vx:Math.cos(angle)*speed,
+        vy:Math.sin(angle)*speed - 6,
+        g:0.22 + Math.random()*0.12,
+        size:6 + Math.random()*9,
+        rot:Math.random()*Math.PI*2,
+        vr:(Math.random()-0.5)*0.4,
+        color:colors[Math.floor(Math.random()*colors.length)],
+        shape:Math.random() < 0.4 ? 'heart' : (Math.random() < 0.5 ? 'rect' : 'circle'),
+        life:0,
+        max:110 + Math.random()*80
+      });
+    }
+    if (!animating){ animating = true; requestAnimationFrame(tick); }
+  }
+
+  function tick(){
+    ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+    for (var i=particles.length-1;i>=0;i--){
+      var p = particles[i];
+      p.life++;
+      p.vy += p.g;
+      p.vx *= 0.992;
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      var alpha = Math.max(0, 1 - p.life/p.max);
+      if (alpha <= 0 || p.y > window.innerHeight + 40){ particles.splice(i,1); continue; }
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      if (p.shape === 'heart'){ drawHeartShape(ctx, p.size); ctx.fill(); }
+      else if (p.shape === 'rect'){ ctx.fillRect(-p.size/2, -p.size/4, p.size, p.size/2); }
+      else { ctx.beginPath(); ctx.arc(0,0,p.size/3,0,Math.PI*2); ctx.fill(); }
+      ctx.restore();
+    }
+    if (particles.length){ requestAnimationFrame(tick); }
+    else { animating = false; ctx.clearRect(0,0,window.innerWidth,window.innerHeight); }
+  }
+
+  function confettiShow(){
+    var w = window.innerWidth, h = window.innerHeight;
+    burst(w*0.5, h*0.55, 160);
+    setTimeout(function(){ burst(w*0.15, h*0.6, 90); }, 250);
+    setTimeout(function(){ burst(w*0.85, h*0.6, 90); }, 450);
+    setTimeout(function(){ burst(w*0.5, h*0.35, 110); }, 900);
+    setTimeout(function(){ burst(w*0.3, h*0.4, 70); burst(w*0.7, h*0.4, 70); }, 1600);
+    // hujan confetti dari atas
+    var rain = 0;
+    var rainTimer = setInterval(function(){
+      rain++;
+      burst(Math.random()*w, -10, 14);
+      if (rain > 14) clearInterval(rainTimer);
+    }, 220);
+  }
+
+  /* ================= Bunga & hati (halaman sukses) ================= */
+  var flowersEl = document.getElementById('flowers');
+  var riseLayer = document.getElementById('riseLayer');
+  var petalPalettes = [
+    ['#ff8fb8','#ffd1e3','#ffd166'],
+    ['#ff6b9d','#ffb3cf','#fff3b0'],
+    ['#ffffff','#ffd1e3','#ffcf5c'],
+    ['#c9a7ff','#e6d4ff','#ffe58a'],
+    ['#ffa8a8','#ffd6d6','#ffd166']
+  ];
+
+  function flowerSVG(size, pal, petals){
+    var s = '<svg width="'+size+'" height="'+(size*2.1)+'" viewBox="-50 -50 100 210" xmlns="http://www.w3.org/2000/svg">';
+    // batang
+    s += '<path d="M0 0 Q-6 60 0 160" fill="none" stroke="#6fbf8b" stroke-width="5" stroke-linecap="round"/>';
+    // daun
+    s += '<path d="M-1 90 Q-34 70 -38 96 Q-14 108 -1 90Z" fill="#8fd6a4"/>';
+    s += '<path d="M-2 125 Q30 104 36 132 Q12 144 -2 125Z" fill="#7cc994"/>';
+    // kelopak
+    for (var i=0;i<petals;i++){
+      var a = i*(360/petals);
+      s += '<ellipse cx="0" cy="-24" rx="12" ry="22" fill="'+pal[0]+'" stroke="'+pal[1]+'" stroke-width="2" transform="rotate('+a+')"/>';
+    }
+    s += '<circle r="12" fill="'+pal[2]+'"/><circle r="5" fill="#ffb02e" opacity=".7"/>';
+    s += '</svg>';
+    return s;
+  }
+
+  function plantFlowers(){
+    flowersEl.innerHTML = '';
+    var w = window.innerWidth;
+    var count = Math.max(8, Math.min(22, Math.round(w/60)));
+    for (var i=0;i<count;i++){
+      var f = document.createElement('div');
+      f.className = 'flower';
+      var size = 46 + Math.random()*46;
+      var pal = petalPalettes[Math.floor(Math.random()*petalPalettes.length)];
+      f.innerHTML = flowerSVG(size, pal, 5 + Math.floor(Math.random()*4));
+      f.style.left = ((i + Math.random()*0.8)/count*100) + '%';
+      f.style.setProperty('--d', (0.3 + Math.random()*1.6).toFixed(2) + 's');
+      f.style.bottom = (-14 - Math.random()*40) + 'px';
+      f.style.zIndex = Math.round(size);
+      flowersEl.appendChild(f);
+    }
+  }
+
+  var riseTimer = null;
+  function spawnRiseHeart(){
+    if (document.hidden) return;
+    if (riseLayer.childElementCount > 40) return;
+    var h = document.createElement('span');
+    h.className = 'rise-heart';
+    h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+    h.style.left = (Math.random()*100) + 'vw';
+    h.style.fontSize = (16 + Math.random()*30) + 'px';
+    h.style.setProperty('--sway', (Math.random()*100 - 50) + 'px');
+    var dur = 5 + Math.random()*5;
+    h.style.animationDuration = dur + 's';
+    riseLayer.appendChild(h);
+    setTimeout(function(){ h.remove(); }, dur*1000 + 200);
+  }
+
+  /* ================= Tombol IYA ================= */
+  var accepted = false;
+  var STORAGE_KEY = 'loveAccepted';
+
+  function saveAccepted(){
+    try { localStorage.setItem(STORAGE_KEY, '1'); } catch(e){}
+  }
+  function isAccepted(){
+    try { return localStorage.getItem(STORAGE_KEY) === '1'; } catch(e){ return false; }
+  }
+  function clearAccepted(){
+    try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
+  }
+
+  function showSuccess(){
+    document.getElementById('success').classList.add('show');
+    document.getElementById('main').style.display = 'none';
+    noBtn.style.display = 'none';
+    plantFlowers();
+    for (var i=0;i<16;i++) setTimeout(spawnRiseHeart, i*150);
+    if (!riseTimer) riseTimer = setInterval(spawnRiseHeart, 300);
+  }
+
+  yesBtn.addEventListener('click', function(){
+    if (accepted) return;
+    accepted = true;
+    saveAccepted();
+    var r = yesBtn.getBoundingClientRect();
+    burst(r.left + r.width/2, r.top + r.height/2, 80);
+    confettiShow();
+    setTimeout(showSuccess, 650);
+  });
+
+  // Tombol kecil untuk mengulang dari awal (kembali ke pertanyaan)
+  var resetBtn = document.getElementById('resetBtn');
+  if (resetBtn){
+    resetBtn.addEventListener('click', function(){
+      clearAccepted();
+      location.reload();
+    });
+  }
+
+  // Jika sudah pernah menjawab IYA, langsung tampilkan halaman sukses
+  if (isAccepted()){
+    accepted = true;
+    showSuccess();
+    setTimeout(function(){ burst(window.innerWidth/2, window.innerHeight*0.4, 90); }, 500);
+  }
+
+  window.addEventListener('resize', function(){
+    if (accepted) plantFlowers();
+  });
+})();
+</script>
+</body>
+</html>
